@@ -1,0 +1,57 @@
+#!/usr/bin/python3
+from pathlib import Path
+from simple_term_menu import TerminalMenu
+import sys, os, glob
+sys.path.append("..")
+from modules.py_config import *
+def path_spaces(value):
+    valor = value.replace(" ", "\ ")
+    return valor
+yes_no = ["[a] Si", "[b] No"]
+if os.path.exists(os.path.join(os.getcwd() + "/config.py")):
+    from config import *
+else:
+    print("Creando archivo de configuracion...")
+    txt_obj = pyconfig.create_settings("config.py")
+    fnf_path = input("Introduce el directorio de mods de Friday Night Funkin': ")
+    if os.path.isdir(fnf_path) == False:
+        os.remove('config.py')
+        pyconfig.close(txt_obj)
+        raise NotADirectoryError("Eso no es un directorio...")
+    fnf_path = "'" + fnf_path + "'"
+    configuracion = {
+            'fnf_path':fnf_path
+    }
+    try:
+        pyconfig.set_settings(txt_obj, configuracion)
+        from config import *
+    except:
+        pass
+    finally:
+        pyconfig.close(txt_obj)
+def list():
+    print("Buscando mods...")
+    paths = glob.glob(fnf_path+'/*')
+    fnf_paths = []
+    for x in paths:
+        if os.path.isdir(x):
+            fnf_paths.append(x)
+        else:
+            pass
+    return fnf_paths
+
+try:
+    if sys.argv[1] == "play":
+        fnf_paths = list()
+        choice = fnf_paths[TerminalMenu(fnf_paths, title = "Qué mod deseas jugar?").show()]
+        ejecutable = glob.glob(os.path.join(choice + "/*.exe"))
+        if str(ejecutable) == "[]":
+            ejecutable = glob.glob(os.path.join(choice + "/**/*.exe"))
+        os.system(f"cd {path_spaces(choice)} && wine {path_spaces(ejecutable[0])}")
+        print("Si el mod no se ha iniciado, asegurese que la carpeta del mod no tenga caracteres especiales como ', -, ?, !, etc.")
+except:
+    print(sys.exc_info())
+    pass
+if __name__ == "__main__":
+    if sys.argv[1] == "list":
+        print("Mods encontrados:", list())
