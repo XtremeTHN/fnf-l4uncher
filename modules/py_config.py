@@ -4,7 +4,7 @@ class PyConfigError(Exception):
     pass
 class pyconfig:
     def create_settings(file_name):
-        open(file_name,'x')
+        open(file_name,'x').close()
         txt_object = open(file_name, 'a+')
         return txt_object
     def set_settings(text_object, dict_settings):
