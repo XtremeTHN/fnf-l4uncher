@@ -1,5 +1,5 @@
 # updatelib.py
-"Libreria" hecha por mi para actualizar/descargar cosas
+Libreria hecha por mi para actualizar/descargar cosas
 ### check_updates(version, url)
 Puedes revisar si hay una nueva actualizacion con esta función, el funcionamiento es simple, compara la variable **version** con el contenido de la variable **url** (que por cierto ***DEBE*** de ser una url), si le pasas una variable que no sea `float` o `str` te saltara un error. Devuelve True si **version** es menor que **url**, False si es mayor.
 Ejemplo:
