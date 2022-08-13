@@ -33,3 +33,5 @@ if updatelib.check_updates(1.0, "https://raw.githubusercontent.com/XtremeTHN/fnf
 	print("Actualización disponible")
 	updatelib.update(updatelib.get_dict_of_files("https://raw.githubusercontent.com/XtremeTHN/fnf-l4uncher/main/updates/version.py").decode("utf-8"))  
 ```
+
+# pyconfiglib
