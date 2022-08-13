@@ -34,4 +34,12 @@ if updatelib.check_updates(1.0, "https://raw.githubusercontent.com/XtremeTHN/fnf
 	updatelib.update(updatelib.get_dict_of_files("https://raw.githubusercontent.com/XtremeTHN/fnf-l4uncher/main/updates/version.py").decode("utf-8"))  
 ```
 
-# pyconfiglib
+# pyconfiglib.py
+Libreria hecha por mi para crear archivos de configuracion py
+### create_settings(filename)
+Crea un archivo de configuracion (py), si el archivo ya existe, se lanzará un error, devuelve el objeto de la funcion `open()` este objeto se ocupa para las demás funciones.
+Ejemplo:
+```python
+import pyconfiglib as config
+config.create_settings(file_name)
+```
