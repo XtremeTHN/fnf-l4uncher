@@ -25,7 +25,7 @@ files = {"py_config.py":"https://raw.githubusercontent.com/XtremeTHN/fnf-l4unche
 ```
 
 ### update(files)
-Con esta funcion puedes actualizar tus archivos que especifiques, con un diccionario (debe contener el nombre del archivo y la url como en `get_dict_of_files()`), solo acepta un argumento que es **files**, si le pasas a esta funcion algo que no sea un diccionario lanzará un error. Recomiendo usarlo junto a `get_dict_of_files()` sin olvidar el `.decode("utf-8")`.
+Con esta funcion puedes actualizar los archivos que especifiques, con un diccionario (debe contener el nombre del archivo y la url como en `get_dict_of_files()`), solo acepta un argumento que es **files**, si le pasas a esta funcion algo que no sea un diccionario lanzará un error. Recomiendo usarlo junto a `get_dict_of_files()` sin olvidar el `.decode("utf-8")`.
 Ejemplo:
 ```python
 from updatelib import *
