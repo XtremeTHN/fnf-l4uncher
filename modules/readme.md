@@ -37,9 +37,39 @@ if updatelib.check_updates(1.0, "https://raw.githubusercontent.com/XtremeTHN/fnf
 # pyconfiglib.py
 Libreria hecha por mi para crear archivos de configuracion py
 ### create_settings(filename)
-Crea un archivo de configuracion (py), si el archivo ya existe, se lanzará un error, devuelve el objeto de la funcion `open()` este objeto se ocupa para las demás funciones.
+Crea un archivo de configuracion (py), se debe pasar un string con el nombre o la ruta del archivo, si el archivo ya existe, se lanzará un error, devuelve el objeto de la funcion `open()` este objeto se ocupa para las demás funciones.
 Ejemplo:
 ```python
 import pyconfiglib as config
-config.create_settings(file_name)
+print(config.create_settings("test.py"))
+```
+Produccion:
+```
+<_io.TextIOWrapper name='test.py' mode='a+' encoding='UTF-8'>
+```
+### get_text_object(file_name)
+Obtiene el objeto de `open()`, **file_name** debe ser una cadena conteniendo el nombre o la ruta del archivo, sirve para cuando tengas un archivo de configuracion ya creado, si no se encuentra el archivo se generará un error. Devuelve el objeto de `open()`. Ejemplo:
+```python
+import pyconfiglib as config
+obj = config.get_text_object("test.py")
+```
+
+### set_settings(text_object, dict_settings)
+Añade configuración al archivo de configuración creado con `create_settings()`, en **text_object** necesita el objeto que devuelve `create_settings()` y en **dict_settings** se necesita un diccionario en donde se define el nombre del valor y el contenido del valor asi `dict = {'configuracion1':'example'}
+Ejemplo:
+```python
+import pyconfiglib as config
+config.set_settigns(config.create_settings("test.py"), datos = {'configuracion1':'ejemplo'})
+```
+Tambien se puede usar con `get_text_object()`:
+```python
+import pyconfiglib as config
+config.set_settigns(config.get_text_object("test.py"), datos = {'configuracion1':'ejemplo'})
+```
+
+### close(text_object)
+Cierra el objeto que se usó
+```python
+import pyconfiglib as config
+config.close(obj)
 ```
