@@ -38,8 +38,7 @@ class main_program:
                 choice = fnf_paths[TerminalMenu(fnf_paths, title = "Qué mod deseas jugar?").show()]
                 ejecutable = glob.glob(os.path.join(choice + "/*.exe"))
             if str(ejecutable) == "[]":
-                ejecutable = glob.glob(os.path.join(choic
-                    e + "/**/*.exe"))
+                ejecutable = glob.glob(os.path.join(choice + "/**/*.exe"))
             os.system(f"cd {main_program.path_spaces(choice)} && wine {main_program.path_spaces(ejecutable[0])}")
             print("Si el mod no se ha iniciado, asegurese que la carpeta del mod no tenga caracteres especiales como ', -, ?, !, etc.")
         except:
