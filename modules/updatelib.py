@@ -9,7 +9,7 @@ class updatelib:
             else:
                 return False
         else:
-            raise TypeError("String and float class expected, {} and {} was given".format(type(url), type(version)))
+            raise TypeError("String and float type expected, {} and {} was given".format(type(url), type(version)))
     def update(files):
         if isinstance(url, dict):
             try:
@@ -22,7 +22,7 @@ class updatelib:
                 print(sys.exc_info()[0], sys.exc_info()[1])
                 sys.exit(1)
         else:
-            raise TypeError("Dict class expected, {} was given".format(type(url)))
+            raise TypeError("Dict type expected, {} was given".format(type(url)))
 
         def get_dict_of_files(url):
         if isinstance(url, str):
@@ -30,4 +30,4 @@ class updatelib:
             updated_files = requests.get(url)
             return updated_files.content
         else:
-            raise TypeError("String class expected, {} was given".format(type(url)))
+            raise TypeError("String type expected, {} was given".format(type(url)))
