@@ -11,7 +11,7 @@ class updatelib:
         else:
             raise TypeError("String and float type expected, {} and {} was given".format(type(url), type(version)))
     def update(files):
-        if isinstance(url, dict):
+        if isinstance(files, dict):
             try:
                 for x in files:
                     updated_files = requests.get(files[x])
