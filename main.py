@@ -49,6 +49,6 @@ class libupd():
 
     
     
-sd = libupd(["https://raw.githubusercontent.com/XtremeTHN/fnf-l4uncher/main/updates/version","https://mediafire.com"])
+sd = libupd(["https://raw.githubusercontent.com/XtremeTHN/fnf-l4uncher/main/version","https://mediafire.com"])
 print(sd.checkupd(1.0))
 sd.update()
