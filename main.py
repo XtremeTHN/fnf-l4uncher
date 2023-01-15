@@ -1,5 +1,5 @@
 import requests as rq
-
+import json, os, tempfile
 class UrlExceptions(Exception):
     class UrlNotSecure(Exception):
         pass
@@ -19,12 +19,9 @@ class libupd():
             if x[0:8] != "https://":
                 raise UrlExceptions.UrlNotSecure("Una de las url no contiene https:// al principio")
         self.url = [self.__connect(url[0]), self.__connect(url[1])]
-        for x in url:
-            try:
-                if x[0] in [1,2]:
-                    raise UrlExceptions.UnknownUrlError("Error desconocido. Status Code: {}".format(x[1]))
-            except TypeError:
-                pass
+
+        if isinstance(self.url[0],tuple) or isinstance(self.url[1],tuple) in [True,True]:
+            raise UrlExceptions.UnknownUrlError("Error desconocido. Debug data: {}".format(self.url))
     def __connect(self,url):
         try:
             code = rq.get(url)
@@ -45,10 +42,13 @@ class libupd():
         else:
             return 0
     
-    def update():
-        pass
+    def update(self, path=os.getcwd()):
+        print(json.loads(self.url[1].content))
+            
+        
 
     
     
 sd = libupd(["https://raw.githubusercontent.com/XtremeTHN/fnf-l4uncher/main/updates/version","https://mediafire.com"])
 print(sd.checkupd(1.0))
+sd.update()
