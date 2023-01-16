@@ -1,5 +1,5 @@
 import requests as rq
-import json, os, multiprocessing
+import json, os
 class UrlExceptions(Exception):
     class UrlNotSecure(Exception):
         pass
