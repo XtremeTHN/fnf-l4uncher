@@ -1,18 +1,18 @@
-import os,glob,multiprocessing, sys
+import os,glob,subprocess, sys
 from modules.libupd import libupd
-from pynput import keyboard
-from modules.getch import getch
+
 version = 0.1
 def run():
-    os.system("python main.py")
+    print("asd")
 
 upd_obj = libupd(["https://raw.githubusercontent.com/XtremeTHN/fnf-l4uncher/main/VERSION","https://raw.githubusercontent.com/XtremeTHN/fnf-l4uncher/main/modules/files.json"])
 if upd_obj.checkupd(version) == 1:
     print("Deseas actualizar? (S/N)")
-    if getch() != 'N':
+    var = input()
+    print(var)
+    if var != 'N':
         print("Actualizando...")
         upd_obj.update()
         print("Hecho, reiniciando...")
-        new_proc = multiprocessing.Process(target=run,daemon=True)
-        new_proc.start()
+        subprocess.Popen(['python3', ], shell=True, start_new_session=True)
         sys.exit()
