@@ -7,12 +7,10 @@ def run():
 
 upd_obj = libupd(["https://raw.githubusercontent.com/XtremeTHN/fnf-l4uncher/main/VERSION","https://raw.githubusercontent.com/XtremeTHN/fnf-l4uncher/main/modules/files.json"])
 if upd_obj.checkupd(version) == 1:
-    print("Deseas actualizar? (S/N)")
-    var = input()
+    var = input("Deseas actualizar? (S/N)")
     print(var)
-    if var != 'N':
+    if var not in ['N','n','no','nO','No']:
         print("Actualizando...")
         upd_obj.update()
-        print("Hecho, reiniciando...")
-        subprocess.Popen(['python3', ], shell=True, start_new_session=True)
+        print("Hecho...")
         sys.exit()
