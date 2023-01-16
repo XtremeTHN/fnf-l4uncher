@@ -1,7 +1,7 @@
 import os,glob,subprocess, sys
 from modules.libupd import libupd
 
-version = 0.1
+version = 0.2
 def run():
     print("asd")
 
