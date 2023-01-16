@@ -36,28 +36,19 @@ class libupd():
         if not isinstance(version,(float,int)):
             raise TypeError("El argumento debe de ser tipo integer o float")
         content = self.url[0].content.decode("utf-8")
-        print(content)
         if float(content) > float(version):
             return 1
         else:
             return 0
-    def __update_main_file():
-        pass
     def update(self, path=os.getcwd()):
         database = json.loads(self.url[1].content)
-        main_file_upd = False
         for x in database:
-            if x == os.path.basename(__file__):
-                main_file_upd = True
-                continue
             web_file = rq.get(database[x]).content
             with open(x,'wb') as file:
-                file.write(web_file)
-        if main_file_upd:
-            self.__update_main_file()
+                file.write(web_file)    
 
     def close(self):
         self.url[0].close()
         self.url[1].close()
 
-__all__ = ['libupd.__update_main_file', 'libupd.__connect']
+__all__ = ['libupd.__connect']
