@@ -44,7 +44,7 @@ class libupd():
         database = json.loads(self.url[1].content)
         for x in database:
             web_file = rq.get(database[x]).content
-            with open(x,'wb') as file:
+            with open(os.path.join(path, x),'wb') as file:
                 file.write(web_file)    
 
     def close(self):
