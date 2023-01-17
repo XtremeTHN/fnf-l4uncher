@@ -46,11 +46,11 @@ else:
     fnf_paths = get_json_data(config_file)
 
 parser = argparse.ArgumentParser(description="Friday Night Funkin Launcher")
-parser.add_argument('-s','--start',action='store_true', dest='fnf')
-parser.add_argument('-a','--alias',action='store', dest='sel_alias')
-parser.add_argument('-sa','--set-alias',type=str,nargs=2, dest='set_alias')
-parser.add_argument('-afm','--add-fnf-mod',action='append', dest='fnf_mod_path')
-parser.add_argument('-pc','--print-config',action='store_true', dest='pc')
+parser.add_argument('-s','--start',action='store_true', dest='fnf', help="Muestra un menu en donde puedes elegir que mod jugar, solo funciona si has añadido alguna carpeta")
+parser.add_argument('-a','--alias',action='store', dest='sel_alias', help="Se usa con -s, sirve para jugar juegos por su alias, antes de utilizarlo debes añadir un alias con --set-alias [alias] [directorio]")
+parser.add_argument('-sa','--set-alias',type=str,nargs=2, dest='set_alias', help="Añade un alias al archivo de configuracion, necesita dos argumentos: alias y el directorio")
+parser.add_argument('-afm','--add-fnf-mod',action='append', dest='fnf_mod_path', help="Añade un directorio a la lista de busqueda, si hay un archivo ejecutable en la carpeta se añade a la lista que se puede ver con el comando -s")
+parser.add_argument('-pc','--print-config',action='store_true', dest='pc', help="Muestra la configuracion actual")
 
 args = parser.parse_args()
 if args.fnf_mod_path != None:
