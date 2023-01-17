@@ -1,2 +1,3 @@
 .venv/**
 modules/__*
+modules/config.json
