@@ -11,10 +11,15 @@ def get_json_data(filename):
         return json.load(file)
 
 def terminal(opts,titlex="placeholder"):
-    if len(opts) < 2:
+    if len(opts) < 1:
         raise IndexError("debug")
     menu = TerminalMenu(opts, title=titlex)
     return menu.show()
+
+def run(path):
+    path = os.path.split(path)
+    print(path[1])
+    os.system('cd {}; wine {}'.format(path[0], path[1]))
 
 version = 1.0
 try:
@@ -31,16 +36,19 @@ except:
 if not os.path.exists(config_file):
     configs = {
         "paths": [],
-        "executables": []
+        "executables": [],
+        "aliases": {}
     }
-    with open(config_file,'w+') as file:
+    with open(config_file,'w') as file:
         json.dump(configs,file,indent=4)
-        fnf_paths = json.load(file)
+    fnf_paths = get_json_data(config_file)
 else:
-    fnf_paths = json.load(open(config_file,'r'))
+    fnf_paths = get_json_data(config_file)
 
 parser = argparse.ArgumentParser(description="Friday Night Funkin Launcher")
-parser.add_argument('-s','--start',action='store', dest='fnf')
+parser.add_argument('-s','--start',action='store_true', dest='fnf')
+parser.add_argument('-a','--alias',action='store', dest='sel_alias')
+parser.add_argument('-sa','--set-alias',type=str,nargs=2, dest='set_alias')
 parser.add_argument('-afm','--add-fnf-mod',action='append', dest='fnf_mod_path')
 parser.add_argument('-pc','--print-config',action='store_true', dest='pc')
 
@@ -55,7 +63,18 @@ if args.pc:
     data = get_json_data(config_file)
     for x in data:
         print("Clave: {} Contenido: {}".format(x,data[x]))
-if args.fnf != None:
+if args.set_alias != None:
+    fnf_paths["aliases"][args.set_alias[0]] = args.set_alias[1]
+    files = glob.glob(os.path.join(args.set_alias[1],'*.exe'))
+    if len(files) > 1:
+        choice = terminal(files,titlex="Se han descubierto mas de un archivo ejecutable, elige con cual quedarte")
+        fnf_paths['aliases'][args.set_alias[0]] = files[choice]
+    elif len(files) == 0:
+        print("[WARN] La carpeta esta vacia")
+    elif len(files) == 1:
+        fnf_paths["aliases"][args.set_alias[0]] = files[0]
+    update_json(config_file,fnf_paths)
+if args.fnf:
     # Chequeo por si alguna carpeta no tiene el archivo ejecutable o si este no existe
     for x in fnf_paths['paths']:
         files = glob.glob(os.path.join(x,'*.exe'))
@@ -74,9 +93,19 @@ if args.fnf != None:
             print("[INFO] Un ejecutable no se encontro, se eliminara la entrada de la configuracion")
             fnf_paths["executables"].remove(x)
     update_json(config_file,fnf_paths)
+    if args.sel_alias != None:
+        for x in fnf_paths["aliases"]:
+            if args.sel_alias != x:
+                continue
+            else:
+                run(fnf_paths["aliases"][x])
+                break
+        sys.exit(0)
+
     try:
+        print(fnf_paths["executables"])
         choice = terminal(fnf_paths["executables"], titlex="Elige el ejecutable que quieras iniciar")
-        os.system('wine {}'.format(fnf_paths["executables"][choice]))
+        run(fnf_paths["executables"][choice])
     except IndexError:
         print("[ERR] Ninguna carpeta o ejecutable encontrado, deberias a;adir carpetas con el argumento -afm")
     
