@@ -88,10 +88,11 @@ if args.down:
     wrote = 0
     path = os.path.join(os.getenv('HOME'),'Games','Friday Night Funkin PsychEngine','fnf.bin')
     os.system('mkdir -p ~/Games/Friday\ Night\ Funkin\ PsychEngine')
-    """with open(path, "wb") as f:
+    with open(path, "wb") as f:
         for data in tqdm(response.iter_content(block_size), total=math.ceil(total_size//block_size), unit="KB", unit_scale=True, desc="Descargando"):
             wrote = wrote + len(data)
-            f.write(data)"""
+            f.write(data)
+    print("Descomprimiendo")
     with zipfile.ZipFile(path, "r") as zip_ref:
         total_files = len(zip_ref.infolist())
         with tqdm(total=total_files, unit=" archivos") as pbar:
@@ -128,7 +129,6 @@ if args.fnf:
         sys.exit(0)
 
     try:
-        print(fnf_paths["executables"])
         choice = terminal(fnf_paths["executables"], titlex="Elige el ejecutable que quieras iniciar")
         run(fnf_paths["executables"][choice])
     except IndexError:
