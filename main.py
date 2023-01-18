@@ -50,6 +50,7 @@ parser.add_argument('-s','--start',action='store_true', dest='fnf', help="Muestr
 parser.add_argument('-a','--alias',action='store', dest='sel_alias', help="Se usa con -s, sirve para jugar juegos por su alias, antes de utilizarlo debes añadir un alias con --set-alias [alias] [directorio]")
 parser.add_argument('-sa','--set-alias',type=str,nargs=2, dest='set_alias', help="Añade un alias al archivo de configuracion, necesita dos argumentos: alias y el directorio")
 parser.add_argument('-afm','--add-fnf-mod',action='append', dest='fnf_mod_path', help="Añade un directorio a la lista de busqueda, si hay un archivo ejecutable en la carpeta se añade a la lista que se puede ver con el comando -s")
+parser.add_argument('-dfnfp','--download-fnf-psych',action='store_true', dest='down', help="Descarga la version base de psych engine")
 parser.add_argument('-pc','--print-config',action='store_true', dest='pc', help="Muestra la configuracion actual")
 
 args = parser.parse_args()
@@ -74,6 +75,30 @@ if args.set_alias != None:
     elif len(files) == 1:
         fnf_paths["aliases"][args.set_alias[0]] = files[0]
     update_json(config_file,fnf_paths)
+
+if args.down:
+    import requests, math, zipfile
+    from tqdm import tqdm
+
+    url = "https://files.gamebanana.com/mods/psychengine-windows64_a5cff.zip"
+    response = requests.get(url, stream=True)
+
+    total_size = int(response.headers.get("content-length", 0))
+    block_size = 1024
+    wrote = 0
+    path = os.path.join(os.getenv('HOME'),'Games','Friday Night Funkin PsychEngine','fnf.bin')
+    os.system('mkdir -p ~/Games/Friday\ Night\ Funkin\ PsychEngine')
+    """with open(path, "wb") as f:
+        for data in tqdm(response.iter_content(block_size), total=math.ceil(total_size//block_size), unit="KB", unit_scale=True, desc="Descargando"):
+            wrote = wrote + len(data)
+            f.write(data)"""
+    with zipfile.ZipFile(path, "r") as zip_ref:
+        total_files = len(zip_ref.infolist())
+        with tqdm(total=total_files, unit=" archivos") as pbar:
+            for file in zip_ref.infolist():
+                zip_ref.extract(file, path=os.path.split(path)[0])
+                pbar.update(1)
+
 if args.fnf:
     # Chequeo por si alguna carpeta no tiene el archivo ejecutable o si este no existe
     for x in fnf_paths['paths']:
